@@ -10,11 +10,20 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous(name = "RR1AutonRedFar", group = "Autonomous")
 public class RR1AutonRedFar extends LinearOpMode {
     public void runOpMode() {
-        Pose2d beginPose = new Pose2d(0, 0, 0);
+        Pose2d beginPose = new Pose2d(62, -36, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Action trajectoryAction;
         trajectoryAction = drive.actionBuilder(drive.pose)
-
+                .lineToX(7)
+                .lineToYSplineHeading(-59, Math.toRadians(-90))
+                .lineToY(21)
+                .splineToConstantHeading(new Vector2d(35, 40), 0)
+                .waitSeconds(1)
+                .setTangent(-Math.PI)
+                .splineToConstantHeading(new Vector2d(12, 24), -Math.PI/2)
+                .lineToY(-59)
+                .lineToY(24)
+                .splineToConstantHeading(new Vector2d(35, 40), 0)
                 .build();
         waitForStart();
         if (isStopRequested()) return;
