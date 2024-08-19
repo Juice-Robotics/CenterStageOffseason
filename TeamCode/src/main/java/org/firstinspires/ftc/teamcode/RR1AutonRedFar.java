@@ -14,16 +14,16 @@ public class RR1AutonRedFar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Action trajectoryAction;
         trajectoryAction = drive.actionBuilder(drive.pose)
-                .lineToX(7)
-                .lineToYSplineHeading(-59, Math.toRadians(-90))
-                .lineToY(21)
-                .splineToConstantHeading(new Vector2d(35, 40), 0)
+                //.splineToConstantHeading(new Vector2d(5, -36))
+                .splineToLinearHeading(new Pose2d(12, -54, Math.toRadians(90)), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(12, 21), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(35, 40), Math.PI)
                 .waitSeconds(1)
                 .setTangent(-Math.PI)
                 .splineToConstantHeading(new Vector2d(12, 24), -Math.PI/2)
-                .lineToY(-59)
-                .lineToY(24)
-                .splineToConstantHeading(new Vector2d(35, 40), 0)
+                .splineToConstantHeading(new Vector2d(12, -54), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(12, 24), Math.PI/-2)
+                .splineToConstantHeading(new Vector2d(35, 40), Math.PI)
                 .build();
         waitForStart();
         if (isStopRequested()) return;
