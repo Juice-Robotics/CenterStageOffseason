@@ -21,34 +21,28 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 0, 0))
-                .lineToX(30)
-                .turn(Math.toRadians(90))
-                .lineToY(30)
-                .turn(Math.toRadians(90))
-                .lineToX(0)
-                .turn(Math.toRadians(90))
-                .lineToY(0)
-                .turn(Math.toRadians(90))
-                .build());
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-36, -62, Math.toRadians(-90)))
+                .setTangent(Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-36, -12), Math.PI/2)
+                .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(35, -12), 0)
+                .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2)
+                .waitSeconds(0.5)
 
-        Image img = null;
-        try { img = ImageIO.read(new File("/Users/zhimi/Downloads/field.png")); }
-        //       try { img = ImageIO.read(new File("/Users/siddharth/dev/Juice/CenterStage/MeepMeepTesting/src/main/java/com/example/meepmeeptesting/Juice-CENTERSTAGE-Dark.png")); }
-        catch (IOException e) {}
-        meepMeep.setBackground(img)
+                .splineToConstantHeading(new Vector2d(35, -12), Math.PI)
+                .setTangent(Math.PI)
+                .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(35, -12), 0)
+                .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2)
+
+                .build());
+       
+        meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_OFFICIAL)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
                 .start();
     }
 }
-//                                .back(55)
-//                                .lineToSplineHeading(new Pose2d(12, -59, Math.toRadians(-90)))
-//                                .back(80)
-//                                .splineToConstantHeading(new Vector2d(35, 40), 0)
-////                                .waitSeconds(3)
-//                                .forward(90)
-//                                .back(90)
-//                                .splineToConstantHeading(new Vector2d(35, 40), 0)
-//                                .build()
