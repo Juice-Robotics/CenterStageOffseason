@@ -23,19 +23,10 @@ public class MeepMeepTesting {
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-36, -62, Math.toRadians(-90)))
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-36, -12), Math.PI/2)
-                .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI)
-                .setTangent(0)
-                .splineToConstantHeading(new Vector2d(35, -12), 0)
-                .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2)
-                .waitSeconds(0.5)
+                .splineToConstantHeading(new Vector2d(-36, -12), Math.PI/2) // move to set spike
+                .setTangent(Math.PI/2)
+                .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI) // pickup stack
 
-                .splineToConstantHeading(new Vector2d(35, -12), Math.PI)
-                .setTangent(Math.PI)
-                .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI)
-                .setTangent(0)
-                .splineToConstantHeading(new Vector2d(35, -12), 0)
-                .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2)
 
                 .build());
        
