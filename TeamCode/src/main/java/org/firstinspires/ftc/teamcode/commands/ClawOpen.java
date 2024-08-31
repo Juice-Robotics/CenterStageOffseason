@@ -7,14 +7,14 @@ import com.acmerobotics.roadrunner.Action;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
-public class StartIntake implements Action {
+public class ClawOpen implements Action {
     Robot robot;
-    public StartIntake(Robot r) {
+    public ClawOpen(Robot r) {
         robot = r;
     }
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        robot.startAutoIntake();
+        robot.smartClawOpen();
         return false;
     }
 }

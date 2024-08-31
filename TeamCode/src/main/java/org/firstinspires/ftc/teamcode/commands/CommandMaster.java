@@ -9,15 +9,16 @@ public class CommandMaster {
     public CommandMaster(Robot r) {
         robot = r;
     }
-    public Action startIntake() {
-        return new StartIntake(robot);
-    }
 
+    public Action startIntake() {return new StartIntake(robot);
+    }
     public Action stopIntake() {
         return new StopIntake(robot);
     }
     public Action setIntakeAngle(float angle){
         return new SetIntakeAngle(robot, angle);
     }
+    public Action depositPreset() {return new DepositPreset(robot);}
+    public Action clawOpen() {return new ClawOpen(robot);}
 }
 
