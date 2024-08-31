@@ -19,6 +19,7 @@ public class RR1AutonRedFar extends LinearOpMode {
     public void runOpMode() {
         robot = new Robot(hardwareMap, true);
         Pose2d beginPose = new Pose2d(-36, -62, Math.toRadians(-90));
+
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Action spike = drive.actionBuilder(drive.pose)
                 .setTangent(Math.PI/2)
@@ -40,26 +41,30 @@ public class RR1AutonRedFar extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI) // backdrop to stack
 
                 .build();
-        Action backdrop2 = drive.actionBuilder(new Pose2d(35, -12, Math.PI))
+        Action backdrop2 = drive.actionBuilder(new Pose2d(-60, -12, Math.PI))
                 .setTangent(Math.PI)
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(35, -12), 0) // stack to backdrop area
                 .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2) // spline in front of backdrop
 
                 .build();
+        telemetry.addData("is","starting");
+        telemetry.update();
         waitForStart();
+
         if (isStopRequested()) return;
+
         Actions.runBlocking(
             new SequentialAction(
                 spike,
                 //stack,
                 new ParallelAction(
-                        stack,
-                        new SequentialAction(
-                                robot.commands.startIntake(),
-                                new SleepAction(1.5),
-                                robot.commands.setIntakeAngle(188)
-                        )
+                    stack,
+                    new SequentialAction(
+                            robot.commands.startIntake(),
+                            new SleepAction(1.5),
+                            robot.commands.setIntakeAngle(188)
+                    )
                 ),
 
                 new SleepAction(1),
@@ -67,7 +72,7 @@ public class RR1AutonRedFar extends LinearOpMode {
                 new ParallelAction(
                     backdrop1,
                     new SequentialAction(
-                        new SleepAction(5),
+                        new SleepAction(4),
                         robot.commands.depositPreset(),
                         new SleepAction(2),
                         robot.commands.clawOpen()
@@ -77,7 +82,7 @@ public class RR1AutonRedFar extends LinearOpMode {
                 new ParallelAction(
                     stack1,
                     new SequentialAction(
-                        new SleepAction(5),
+                        new SleepAction(4),
                         robot.commands.startIntake(),
                         new SleepAction(2),
                         robot.commands.setIntakeAngle(198)
