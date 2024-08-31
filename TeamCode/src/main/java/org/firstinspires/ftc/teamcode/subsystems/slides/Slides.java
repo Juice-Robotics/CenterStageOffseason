@@ -71,7 +71,7 @@ public class Slides {
 
     public void update() {
         //MotionState state = profile.get(timer.time());
-        //target = state.getX();
+//        target = state.getX();
 
         int motorPos = slides1.motor.getCurrentPosition();
 
@@ -94,9 +94,9 @@ public class Slides {
     }
 
     public void runToPosition(int ticks) {
-//        target = ticks;
+        target = ticks;
         //profile = MotionProfileGenerator.generateSimpleMotionProfile(new MotionState(getPos(), 0), new MotionState(ticks, 0), maxvel, maxaccel);
-        timer.reset();
+//        timer.reset();
     }
 
     public void runToPreset(Levels preset) {

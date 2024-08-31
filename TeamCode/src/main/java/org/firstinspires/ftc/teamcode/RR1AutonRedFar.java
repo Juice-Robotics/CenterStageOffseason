@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -27,9 +28,9 @@ public class RR1AutonRedFar extends LinearOpMode {
                 .build();
         Action stack = drive.actionBuilder(new Pose2d(-36, -12,-Math.PI/2))
                 .setTangent(Math.PI/2)
-                .splineToLinearHeading(new Pose2d(-66, -12, Math.PI), Math.PI) // pickup stack
+                .splineToLinearHeading(new Pose2d(-68, -12, Math.PI), Math.PI) // pickup stack
                 .build();
-        Action backdrop1 = drive.actionBuilder(new Pose2d(-66, -12, Math.PI))
+        Action backdrop1 = drive.actionBuilder(new Pose2d(-68, -12, Math.PI))
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(35, -12), 0) // stack to backdrop area
                 .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2) // spline in front of backdrop
@@ -55,44 +56,54 @@ public class RR1AutonRedFar extends LinearOpMode {
         if (isStopRequested()) return;
 
         Actions.runBlocking(
-            new SequentialAction(
-                spike,
-                //stack,
-                new ParallelAction(
-                    stack,
+            new ParallelAction(
                     new SequentialAction(
-                            robot.commands.startIntake(),
-                            new SleepAction(1.5),
-                            robot.commands.setIntakeAngle(188)
-                    )
-                ),
+                        spike,
+                        //stack,
+                        new ParallelAction(
+                            stack,
+                            new SequentialAction(
+                                    robot.commands.startIntake(),
+                                    new SleepAction(1.5),
+                                    robot.commands.setIntakeAngle(188)
+                            )
+                        ),
 
-                new SleepAction(1),
-                robot.commands.stopIntake(),
-                new ParallelAction(
-                    backdrop1,
-                    new SequentialAction(
-                        new SleepAction(4),
-                        robot.commands.depositPreset(),
-                        new SleepAction(2),
-                        robot.commands.clawOpen()
-                    )
-                ),
-                new SleepAction(1),
-                new ParallelAction(
-                    stack1,
-                    new SequentialAction(
-                        new SleepAction(4),
-                        robot.commands.startIntake(),
-                        new SleepAction(2),
-                        robot.commands.setIntakeAngle(198)
-                    )
+                    new SleepAction(1),
+                    robot.commands.stopIntake(),
+                    new ParallelAction(
+                            backdrop1,
+                            new SequentialAction(
+                                    new SleepAction(4),
+                                    robot.commands.depositPreset(),
+                                    new SleepAction(2),
+                                    robot.commands.clawOpen()
+                            )
+                    ),
+                    new SleepAction(1),
+                    new ParallelAction(
+                            stack1,
+                            new SequentialAction(
+                                    new SleepAction(4),
+                                    robot.commands.startIntake(),
+                                    new SleepAction(2),
+                                    robot.commands.setIntakeAngle(198)
+                            )
 
-                ),
-                new SleepAction(1),
-                robot.commands.stopIntake(),
-                backdrop2
-            )
-        );
+                    ),
+                    new SleepAction(1),
+                    robot.commands.stopIntake(),
+                    new ParallelAction(
+                        backdrop2,
+                        new SequentialAction(
+                            new SleepAction(4),
+                            robot.commands.depositPreset(),
+                            new SleepAction(2),
+                            robot.commands.clawOpen()
+                        )
+                    )
+            ),
+                    robot.commands.subsystemUpdate(this::isStopRequested)
+        ));
     }
 }

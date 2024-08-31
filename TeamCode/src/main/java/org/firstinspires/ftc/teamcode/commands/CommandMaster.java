@@ -4,6 +4,8 @@ import com.acmerobotics.roadrunner.Action;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
+import java.util.concurrent.Callable;
+
 public class CommandMaster {
     Robot robot;
     public CommandMaster(Robot r) {
@@ -20,5 +22,6 @@ public class CommandMaster {
     }
     public Action depositPreset() {return new DepositPreset(robot);}
     public Action clawOpen() {return new ClawOpen(robot);}
+    public Action subsystemUpdate(Callable<Boolean> isStopRequested) {return new SubsystemUpdates(robot, isStopRequested);}
 }
 
