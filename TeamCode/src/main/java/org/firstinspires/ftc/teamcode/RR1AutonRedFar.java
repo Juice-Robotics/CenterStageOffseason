@@ -33,10 +33,10 @@ public class RR1AutonRedFar extends LinearOpMode {
         Action backdrop1 = drive.actionBuilder(new Pose2d(-67.3, -12, Math.PI))
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(35, -12), 0) // stack to backdrop area
-                .splineToConstantHeading(new Vector2d(46.25, -38), Math.PI/-2) // spline in front of backdrop
+                .splineToConstantHeading(new Vector2d(46.1, -41), Math.PI/-2) // spline in front of backdrop
                 .waitSeconds(0.5)
                 .build();
-        Action stack1 = drive.actionBuilder(new Pose2d(46.15, -36,Math.PI))
+        Action stack1 = drive.actionBuilder(new Pose2d(46.15, -41,Math.PI))
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(35, -12), Math.PI) //
                 .splineToLinearHeading(new Pose2d(-67.4, -11.5, Math.PI), Math.PI) // backdrop to stack
@@ -46,7 +46,7 @@ public class RR1AutonRedFar extends LinearOpMode {
                 .setTangent(Math.PI)
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(35, -12), 0) // stack to backdrop area
-                .splineToConstantHeading(new Vector2d(47, -38), Math.PI/-2) // spline in front of backdrop
+                .splineToConstantHeading(new Vector2d(45.4, -41), Math.PI/-2) // spline in front of backdrop
 
                 .build();
         telemetry.addData("is","starting");
