@@ -28,25 +28,25 @@ public class RR1AutonRedFar extends LinearOpMode {
                 .build();
         Action stack = drive.actionBuilder(new Pose2d(-36, -12,-Math.PI/2))
                 .setTangent(Math.PI/2)
-                .splineToLinearHeading(new Pose2d(-68, -12, Math.PI), Math.PI) // pickup stack
+                .splineToLinearHeading(new Pose2d(-67.3, -12, Math.PI), Math.PI) // pickup stack
                 .build();
-        Action backdrop1 = drive.actionBuilder(new Pose2d(-68, -12, Math.PI))
+        Action backdrop1 = drive.actionBuilder(new Pose2d(-67.3, -12, Math.PI))
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(35, -12), 0) // stack to backdrop area
-                .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2) // spline in front of backdrop
+                .splineToConstantHeading(new Vector2d(46.25, -38), Math.PI/-2) // spline in front of backdrop
                 .waitSeconds(0.5)
                 .build();
-        Action stack1 = drive.actionBuilder(new Pose2d(48, -36,Math.PI))
+        Action stack1 = drive.actionBuilder(new Pose2d(46.15, -36,Math.PI))
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(35, -12), Math.PI) //
-                .splineToLinearHeading(new Pose2d(-60, -12, Math.PI), Math.PI) // backdrop to stack
+                .splineToLinearHeading(new Pose2d(-67.4, -11.5, Math.PI), Math.PI) // backdrop to stack
 
                 .build();
-        Action backdrop2 = drive.actionBuilder(new Pose2d(-60, -12, Math.PI))
+        Action backdrop2 = drive.actionBuilder(new Pose2d(-67.4, -11.5, Math.PI))
                 .setTangent(Math.PI)
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(35, -12), 0) // stack to backdrop area
-                .splineToConstantHeading(new Vector2d(48, -36), Math.PI/-2) // spline in front of backdrop
+                .splineToConstantHeading(new Vector2d(47, -38), Math.PI/-2) // spline in front of backdrop
 
                 .build();
         telemetry.addData("is","starting");
@@ -65,7 +65,7 @@ public class RR1AutonRedFar extends LinearOpMode {
                             new SequentialAction(
                                     robot.commands.startIntake(),
                                     new SleepAction(1.5),
-                                    robot.commands.setIntakeAngle(188)
+                                    robot.commands.setIntakeAngle(193)
                             )
                         ),
 
@@ -74,20 +74,20 @@ public class RR1AutonRedFar extends LinearOpMode {
                     new ParallelAction(
                             backdrop1,
                             new SequentialAction(
-                                    new SleepAction(4),
+                                    new SleepAction(3),
                                     robot.commands.depositPreset(),
-                                    new SleepAction(2),
-                                    robot.commands.clawOpen()
+                                    new SleepAction(1.2),
+                                    robot.commands.clawOpen(),
+                                    new SleepAction(0.25)
                             )
                     ),
-                    new SleepAction(1),
                     new ParallelAction(
                             stack1,
                             new SequentialAction(
-                                    new SleepAction(4),
+                                    new SleepAction(1),
                                     robot.commands.startIntake(),
-                                    new SleepAction(2),
-                                    robot.commands.setIntakeAngle(198)
+                                    new SleepAction(0.5),
+                                    robot.commands.setIntakeAngle(175)
                             )
 
                     ),
@@ -96,9 +96,9 @@ public class RR1AutonRedFar extends LinearOpMode {
                     new ParallelAction(
                         backdrop2,
                         new SequentialAction(
-                            new SleepAction(4),
+                            new SleepAction(3),
                             robot.commands.depositPreset(),
-                            new SleepAction(2),
+                            new SleepAction(1.2),
                             robot.commands.clawOpen()
                         )
                     )
